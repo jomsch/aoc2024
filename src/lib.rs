@@ -1,14 +1,19 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+pub mod day1;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+mod util {
+    /// Generates a run function which runs part1 and part2 of the day
+    macro_rules! day_runner {
+        ( $x:expr) => {
+            pub fn run(input: &str) {
+                println!("$x",);
+                let result_part1 = part1(input);
+                println!("\t Part 1 Result: {result_part1}");
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+                let result_part2 = part2(input);
+                println!("\t Part 2 Result: {result_part2}");
+            }
+        };
     }
+
+    pub(crate) use day_runner;
 }
