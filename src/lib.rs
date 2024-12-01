@@ -1,19 +1,21 @@
-pub mod day1;
+use std::fmt::Display;
 
-mod util {
-    /// Generates a run function which runs part1 and part2 of the day
-    macro_rules! day_runner {
-        ( $x:expr) => {
-            pub fn run(input: &str) {
-                println!("$x",);
-                let result_part1 = part1(input);
-                println!("\t Part 1 Result: {result_part1}");
+mod day1;
 
-                let result_part2 = part2(input);
-                println!("\t Part 2 Result: {result_part2}");
-            }
-        };
+pub use day1::Day1;
+
+pub trait Solution {
+    const NAME: &'static str;
+
+    fn run(input: &str) {
+        println!("{}", Self::NAME);
+        let result_part1 = Self::part1(input);
+        println!("\t Part 1 Result: {result_part1}");
+
+        let result_part2 = Self::part2(input);
+        println!("\t Part 2 Result: {result_part2}");
     }
 
-    pub(crate) use day_runner;
+    fn part1(input: &str) -> impl Display;
+    fn part2(input: &str) -> impl Display;
 }

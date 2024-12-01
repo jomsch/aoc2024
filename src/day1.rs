@@ -1,8 +1,6 @@
-use crate::util::day_runner;
+use crate::Solution;
 use std::collections::HashMap;
 use std::fmt::Display;
-
-day_runner!("Day 1");
 
 fn parse_line(line: &str) -> (usize, usize) {
     let mut split = line.split_whitespace().map(|s| s.parse::<usize>().unwrap());
@@ -25,25 +23,30 @@ fn parse_input(input: &str) -> (Vec<usize>, Vec<usize>) {
     (left, right)
 }
 
-pub fn part1(input: &str) -> impl Display {
-    let (left, right) = parse_input(input);
-    left.iter()
-        .zip(right.iter())
-        .map(|(x, y)| x.abs_diff(*y))
-        .sum::<usize>()
-}
+pub struct Day1;
 
-pub fn part2(input: &str) -> impl Display {
-    let (left, right) = parse_input(input);
+impl Solution for Day1 {
+    const NAME: &'static str = "Day 1";
 
-    let similarity_cache: HashMap<usize, usize> =
-        right.iter().fold(HashMap::new(), |mut hmap, val| {
-            let count = hmap.get(val);
-            hmap.insert(*val, count.unwrap_or(&0) + 1);
-            hmap
-        });
+    fn part1(input: &str) -> impl Display {
+        let (left, right) = parse_input(input);
+        left.iter()
+            .zip(right.iter())
+            .map(|(x, y)| x.abs_diff(*y))
+            .sum::<usize>()
+    }
+    fn part2(input: &str) -> impl Display {
+        let (left, right) = parse_input(input);
 
-    left.iter()
-        .map(|x| x * similarity_cache.get(x).unwrap_or(&0))
-        .sum::<usize>()
+        let similarity_cache: HashMap<usize, usize> =
+            right.iter().fold(HashMap::new(), |mut hmap, val| {
+                let count = hmap.get(val);
+                hmap.insert(*val, count.unwrap_or(&0) + 1);
+                hmap
+            });
+
+        left.iter()
+            .map(|x| x * similarity_cache.get(x).unwrap_or(&0))
+            .sum::<usize>()
+    }
 }

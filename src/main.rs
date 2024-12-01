@@ -1,10 +1,12 @@
+use aoc2024::Solution;
+
 fn main() {
     let args = Args::from_env();
 
     let input = std::fs::read_to_string(&args.input_path).unwrap();
 
     match args.day {
-        1 => aoc2024::day1::run(&input),
+        1 => aoc2024::Day1::run(&input),
         _ => println!("Day not found"),
     }
 }
